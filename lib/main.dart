@@ -115,14 +115,12 @@ Future<void> _sendMsg(
   print('$msg totalTime: ${DateTime.now().millisecondsSinceEpoch - startTime}');
 }
 
-// The entrypoint that runs on the spawned isolate. Receives messages from
-// the main isolate, reads the contents of the file, decodes the JSON, and
-// sends the result back to the main isolate.
 Future<void> _readAndParseJsonService(SendPort p) async {
   final commandPort = ReceivePort();
   p.send(commandPort.sendPort);
   await for (final message in commandPort) {
     if (message is int) {
+      // Waited here for 100ms
       await Future.delayed(Duration(milliseconds: 100));
       List<double> list = [
         0.40123534202575684,
